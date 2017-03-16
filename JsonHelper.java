@@ -11,21 +11,21 @@ import java.util.Map;
 public class JsonHelper
 {
 	/**
-	 * Convert JSONObject or JSONArray to RequestParams
+	 * Convert JSONObject to RequestParams
 	 * @param JSONObject json
 	 * @return RequestParams params
-     */
+	*/
 	public static RequestParams toRequestParams(JSONObject jsonObject)
 	{
 		return mapToRequestParams(objectToHashMap(jsonObject, ""))
 	}
 
 	/**
-	 * Convert JSON object to HashMap
-	 * @param jsonObject
-	 * @param prefix
-     * @return
-     */
+	 * Convert JSONObject to HashMap<String, String>
+	 * @param JSONObject jsonObject
+	 * @param String prefix
+	 * @return HashMap<String, String> params
+	*/
 	private static HashMap<String, String> objectToHashMap(JSONObject jsonObject, String prefix)
 	{
 		HashMap<String, String> params = new HashMap<>();
@@ -69,8 +69,11 @@ public class JsonHelper
 	}
 
 	/**
-	 * Convert JSON array to HashMap
-	 */
+	 * Convert JSONArray to HashMap<String, String>
+	 * @param JSONArray jsonArray
+	 * @param String prefix
+	 * @return HashMap<String, String> params
+	*/
 	private static HashMap<String, String> arrayToHashMap(JSONArray jsonArray, String prefix)
 	{
 		HashMap<String, String> map = new HashMap<>();
@@ -110,9 +113,9 @@ public class JsonHelper
 	}
 
 	/**
-	 * Convert HasMap to RequestParams
-	 * @param map
-	 * @return
+	 * Convert HashMap<String, String> to RequestParams
+	 * @param HashMap<String, String> map
+	 * @return RequestParams params
 	 */
 	private static RequestParams mapToRequestParams(HashMap<String, String> map)
 	{
