@@ -12,52 +12,12 @@ public class JsonHelper
 {
 	/**
 	 * Convert JSONObject or JSONArray to RequestParams
-	 * @param json
-	 * @return params
-	 * @throws JSONException
+	 * @param JSONObject json
+	 * @return RequestParams params
      */
-	public static RequestParams toRequestParams(Object json) throws JSONException
+	public static RequestParams toRequestParams(JSONObject jsonObject)
 	{
-		RequestParams params;
-
-		if(json instanceof JSONObject)
-		{
-			params = objectToRequestParams((JSONObject) json);
-		}
-		else if(json instanceof JSONArray)
-		{
-			params = arrayToRequestParams((JSONArray) json);
-		}
-		else
-		{
-			throw new JSONException("Object is not a JSONObject or JSONArray.");
-		}
-
-		return params;
-	}
-
-	/**
-	 * Convert JSONObject to RequestParams
-	 * @param jsonObject
-	 * @return
-     */
-	public static RequestParams objectToRequestParams(JSONObject jsonObject)
-	{
-		HashMap<String, String> map = objectToHashMap(jsonObject, "");
-
-		return mapToRequestParams(map);
-	}
-
-	/**
-	 * Convert JSONArray to RequestParams
-	 * @param jsonArray
-	 * @return
-     */
-	public static RequestParams arrayToRequestParams(JSONArray jsonArray)
-	{
-		HashMap<String, String> map = arrayToHashMap(jsonArray, "");
-
-		return mapToRequestParams(map);
+		return mapToRequestParams(objectToHashMap(jsonObject, ""))
 	}
 
 	/**
@@ -109,7 +69,7 @@ public class JsonHelper
 	}
 
 	/**
-	 * Convert JSON array to RequestParams
+	 * Convert JSON array to HashMap
 	 */
 	private static HashMap<String, String> arrayToHashMap(JSONArray jsonArray, String prefix)
 	{
