@@ -2,7 +2,7 @@
 
 ## Introduction
 
-In one of my project, in which I'm using Loopj library (http://loopj.com/android-async-http/), I had to send a complex JSON Object to a web-service over POST HTTP request.
+In one of my project, in which I'm using [Loopj library](http://loopj.com/android-async-http/), I had to send a complex JSON Object to a web-service over POST HTTP request.
 
 I tried to send data thanks to `StringEntity` with a application/json content type. Unfortunately, data was only accessible through `php://input` and not directly in `$_POST`. It's the reason why, I analyzed how jQuery library send JSON object then we can read in posted data. Simply, convert JSON object to pairs of key/value in order to POST them "normally".
 
