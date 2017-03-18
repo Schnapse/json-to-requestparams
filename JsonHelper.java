@@ -11,24 +11,24 @@ import java.util.Map;
 public class JsonHelper
 {
 	/**
-	 * Convert JSONObject to RequestParams
-	 * @param JSONObject jsonObject
-	 * @return RequestParams params
-	*/
+	 * Convert JSONObject or JSONArray to RequestParams
+	 * @param jsonObject
+	 * @return
+     */
 	public static RequestParams toRequestParams(JSONObject jsonObject)
 	{
-		return mapToRequestParams(objectToHashMap(jsonObject, ""));
+		return mapToRequestParams(objectToHashMap(jsonObject, null));
 	}
 
 	/**
-	 * Convert JSONObject to HashMap<String, String>
-	 * @param JSONObject jsonObject
-	 * @param String prefix
-	 * @return HashMap<String, String> params
-	*/
+	 * Convert JSONObject to HashMap
+	 * @param jsonObject
+	 * @param prefix
+     * @return
+     */
 	private static HashMap<String, String> objectToHashMap(JSONObject jsonObject, String prefix)
 	{
-		HashMap<String, String> params = new HashMap<>();
+		HashMap<String, String> hashMap = new HashMap<>();
 
 		Iterator<String> iterator = jsonObject.keys();
 
@@ -42,22 +42,7 @@ public class JsonHelper
 			{
 				Object value = jsonObject.get(key);
 
-				if(value instanceof JSONObject)
-				{
-					JSONObject obj = (JSONObject) value;
-
-					params.putAll(objectToHashMap(obj, tmpPrefix));
-				}
-				else if(value instanceof  JSONArray)
-				{
-					JSONArray array = (JSONArray) value;
-
-					params.putAll(arrayToHashMap(array, tmpPrefix));
-				}
-				else
-				{
-					params.put(tmpPrefix, value.toString());
-				}
+				addParam(hashMap, tmpPrefix, value);
 			}
 			catch (JSONException e)
 			{
@@ -65,18 +50,18 @@ public class JsonHelper
 			}
 		}
 
-		return params;
+		return hashMap;
 	}
 
 	/**
-	 * Convert JSONArray to HashMap<String, String>
-	 * @param JSONArray jsonArray
-	 * @param String prefix
-	 * @return HashMap<String, String> params
-	*/
+	 * Convert JSONArray to HashMap
+	 * @param jsonArray
+	 * @param prefix
+     * @return
+     */
 	private static HashMap<String, String> arrayToHashMap(JSONArray jsonArray, String prefix)
 	{
-		HashMap<String, String> map = new HashMap<>();
+		HashMap<String, String> hashMap = new HashMap<>();
 
 		for(int i = 0; i < jsonArray.length(); i++)
 		{
@@ -86,22 +71,7 @@ public class JsonHelper
 			{
 				Object value = jsonArray.get(i);
 
-				if(value instanceof JSONObject)
-				{
-					JSONObject obj = (JSONObject) value;
-
-					map.putAll(objectToHashMap(obj, tmpPrefix));
-				}
-				else if(value instanceof JSONArray)
-				{
-					JSONArray array = (JSONArray) value;
-
-					map.putAll(arrayToHashMap(array, tmpPrefix));
-				}
-				else
-				{
-					map.put(tmpPrefix, value.toString());
-				}
+				addParam(hashMap, tmpPrefix, value);
 			}
 			catch(JSONException e)
 			{
@@ -109,13 +79,13 @@ public class JsonHelper
 			}
 		}
 
-		return map;
+		return hashMap;
 	}
 
 	/**
-	 * Convert HashMap<String, String> to RequestParams
-	 * @param HashMap<String, String> map
-	 * @return RequestParams params
+	 * Convert HashMap to RequestParams
+	 * @param map
+	 * @return
 	 */
 	private static RequestParams mapToRequestParams(HashMap<String, String> map)
 	{
@@ -127,5 +97,31 @@ public class JsonHelper
 		}
 
 		return params;
+	}
+
+	/**
+	 * Add param to HashMap
+	 * @param params
+	 * @param prefix
+	 * @param value
+     */
+	private static void addParam(HashMap<String, String> params, String prefix, Object value)
+	{
+		if(value instanceof JSONObject)
+		{
+			JSONObject obj = (JSONObject) value;
+
+			params.putAll(objectToHashMap(obj, prefix));
+		}
+		else if(value instanceof JSONArray)
+		{
+			JSONArray array = (JSONArray) value;
+
+			params.putAll(arrayToHashMap(array, prefix));
+		}
+		else
+		{
+			params.put(prefix, value.toString());
+		}
 	}
 }
