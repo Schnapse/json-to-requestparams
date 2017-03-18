@@ -57,3 +57,7 @@ It would create three pairs of key value :
 If you dump `$_POST` on server-side, you would retrieve data properly formed :
 
     {users : [{name : "Jean", age : "24", city : "Strasbourg"}]}
+
+## Evolutions
+
+I'll probably adapt this class to a real Loopj library compatible object and later, share it on jcenter / maven repos in order to allow people to use it thanks to gradle.
