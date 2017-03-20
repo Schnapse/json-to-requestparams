@@ -17,7 +17,7 @@ public class JsonHelper
      */
 	public static RequestParams toRequestParams(JSONObject jsonObject)
 	{
-		return mapToRequestParams(objectToHashMap(jsonObject, null));
+		return mapToRequestParams(objectToHashMap(jsonObject, ""));
 	}
 
 	/**
